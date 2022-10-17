@@ -2,7 +2,7 @@
     <header>
         <nav class="container">
             <div class="branding">
-                <router-link class="header" :to="{name:'home'}">FireBlogs</router-link>
+                <router-link class="header" :to="{name:'Home'}">FireBlogs</router-link>
             </div>
 
             <div class="nav-links">
@@ -59,13 +59,13 @@ const toggleMobileNav = () => {
 header {
     background-color: #fff;
     padding: 0 25px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     z-index: 99;
 
     .link {
         font-weight: 500;
         padding: 0 8px;
-        transition: .3s color ease;
+        transition: 0.3s color ease;
 
         &:hover {
             color: #1eb8b8;
@@ -91,9 +91,9 @@ header {
         .nav-links {
             position: relative;
             display: flex;
+            flex: 1;
             align-items: center;
             justify-content: flex-end;
-            flex: 1;
 
             ul {
                 margin-right: 32px;
@@ -106,6 +106,93 @@ header {
                     margin-right: 0;
                 }
             }
+
+            .profile {
+                position: relative;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                color: #fff;
+                background-color: #303030;
+
+                span {
+                    pointer-events: none;
+                }
+
+                .profile-menu {
+                    position: absolute;
+                    top: 60px;
+                    right: 0;
+                    width: 250px;
+                    background-color: #303030;
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+                    .info {
+                        display: flex;
+                        align-items: center;
+                        padding: 15px;
+                        border-bottom: 1px solid #fff;
+
+                        .initials {
+                            position: initial;
+                            width: 40px;
+                            height: 40px;
+                            background-color: #fff;
+                            color: #303030;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 50%;
+                        }
+
+                        .right {
+                            flex: 1;
+                            margin-left: 24px;
+
+                            p:nth-child(1) {
+                                font-size: 14px;
+                            }
+
+                            p:nth-child(2),
+                            p:nth-child(3) {
+                                font-size: 12px;
+                            }
+                        }
+                    }
+
+                    .options {
+                        padding: 15px;
+                        .option {
+                            text-decoration: none;
+                            color: #fff;
+                            display: flex;
+                            align-items: center;
+                            margin-bottom: 12px;
+
+                            .icon {
+                                width: 18px;
+                                height: auto;
+                            }
+                            p {
+                                font-size: 14px;
+                                margin-left: 12px;
+                            }
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .mobile-user-menu {
+            margin-right: 40px;
         }
     }
 
@@ -124,11 +211,11 @@ header {
         max-width: 250px;
         display: flex;
         flex-direction: column;
-        top: 0;
-        left: 0;
         position: fixed;
         height: 100%;
         background-color: #303030;
+        top: 0;
+        left: 0;
 
         .link {
             padding: 15px 0;
@@ -138,19 +225,15 @@ header {
 
     .mobile-nav-enter-active,
     .mobile-nav-leave-active {
-        transition: all 1s ease;
+        transition: 1s ease all;
     }
 
-    .mobile-nav-enter {
+    .mobile-nav-enter-from, .mobile-nav-leave-to {
         transform: translateX(-250px);
     }
 
     .mobile-nav-enter-to {
         transform: translateX(0);
-    }
-
-    .mobile-nav-leave-to {
-        transform: translateX(-250px);
     }
 }
 </style>

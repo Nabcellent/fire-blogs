@@ -3,13 +3,15 @@
         <div class="app">
             <Navigation/>
             <router-view />
+            <Footer/>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import Navigation from "@/components/Navigation.vue";</script>
+import Navigation from "@/components/Navigation.vue";
+import Footer from "@/components/Footer.vue";</script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
