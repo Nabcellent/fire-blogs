@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "@vue/reactivity";
+import { ref } from "vue";
 import BlogPost from "@/components/BlogPost.vue";
 import BlogCard from "@/components/BlogCard.vue";
 
