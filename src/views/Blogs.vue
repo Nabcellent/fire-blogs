@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onBeforeUnmount } from "vue";
 import { useStore } from "@/store";
 import BlogCard from "@/components/BlogCard.vue";
 
@@ -26,6 +26,10 @@ const editPost = computed({
     set(payload) {
         store.commit('toggleEditPost', payload)
     }
+})
+
+onBeforeUnmount(() => {
+    store.commit('toggleEditPost', false)
 })
 
 </script>
