@@ -26,12 +26,12 @@
     </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from "vue";
 
 const mobile = ref(false)
 const mobileNav = ref(false)
-const windowWidth = ref(null)
+const windowWidth = ref(window.innerWidth)
 
 onMounted(() => {
     window.addEventListener('resize', checkScreen)
