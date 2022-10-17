@@ -1,15 +1,17 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'</script>
-
 <template>
     <div class="app-wrapper">
         <div class="app">
+            <Navigation/>
             <router-view />
         </div>
     </div>
 </template>
 
-<style lang="scss" scoped>
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import Navigation from "@/components/Navigation.vue";</script>
+
+<style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
 * {
