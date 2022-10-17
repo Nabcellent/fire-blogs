@@ -1,6 +1,6 @@
 <template>
     <div class="blog-card">
-        <div class="icons">
+        <div class="icons" v-show="editPost">
             <div class="icon">
                 <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="edit"
                      class="edit svg-inline--fa fa-edit fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,14 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useStore } from "@/store";
+
 defineProps({ post: Object })
+
+const store = useStore()
+
+const editPost = computed(() => store.state.editPost)
 </script>
 
 <style lang="scss" scoped>

@@ -31,9 +31,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import BlogPost from "@/components/BlogPost.vue";
 import BlogCard from "@/components/BlogCard.vue";
+import { useStore } from "@/store";
+
+const store = useStore()
 
 const welcomeScreen = ref({
     title: "Welcome!",
@@ -56,12 +59,7 @@ const sampleBlogPost = ref([
     }
 ])
 
-const sampleBlogCards = ref([
-    { title: 'Blog card #1', blogCoverPhoto: 'stock-1', blogDate: 'May 1 2021' },
-    { title: 'Blog card #2', blogCoverPhoto: 'stock-2', blogDate: 'May 1 2021' },
-    { title: 'Blog card #3', blogCoverPhoto: 'stock-3', blogDate: 'May 1 2021' },
-    { title: 'Blog card #4', blogCoverPhoto: 'stock-4', blogDate: 'May 1 2021' },
-])
+const sampleBlogCards = computed(() => store.state.sampleBlogCards)
 </script>
 
 <style lang="scss" scoped>
