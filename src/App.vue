@@ -1,17 +1,36 @@
 <template>
     <div class="app-wrapper">
         <div class="app">
-            <Navigation/>
+            <Navigation v-if="!showNavigation"/>
             <router-view/>
-            <Footer/>
+            <Footer v-if="!showNavigation"/>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import Navigation from "@/components/Navigation.vue";
-import Footer from "@/components/Footer.vue";</script>
+import Footer from "@/components/Footer.vue";
+import { onMounted, ref, watch } from "vue";
+
+const route = useRoute()
+
+const showNavigation = ref(true)
+
+const checkRoute = () => {
+    if (['Login', 'Register', 'ForgotPassword'].includes(String(route.name))) {
+        showNavigation.value = true
+        return
+    }
+
+    showNavigation.value = false
+}
+
+onMounted(() => checkRoute())
+
+watch(route, checkRoute)
+</script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
