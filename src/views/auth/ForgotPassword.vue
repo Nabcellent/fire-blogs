@@ -34,11 +34,26 @@
 import Modal from "@/components/Modal.vue";
 import { ref } from "vue";
 import Loading from "@/components/Loading.vue";
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
 
 const email = ref("")
 const modalActive = ref(false)
 const modalMessage = ref("")
 const loading = ref(false)
+
+const resetPassword = () => {
+    loading.value = true
+
+    sendPasswordResetEmail(getAuth(), email.value).then(() => {
+        modalMessage.value = "If your account exists, you will receive an email."
+        loading.value = false
+        modalActive.value = true
+    }).catch(err => {
+        modalMessage.value = err.message
+        loading.value = false
+        modalActive.value = true
+    })
+}
 
 const closeModal = () => {
     modalActive.value = !modalActive.value

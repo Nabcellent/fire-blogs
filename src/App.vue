@@ -13,6 +13,8 @@ import { RouterView, useRoute } from 'vue-router'
 import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
 import { onMounted, ref, watch } from "vue";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { store } from "@/store";
 
 const route = useRoute()
 
@@ -27,7 +29,14 @@ const checkRoute = () => {
     showNavigation.value = false
 }
 
-onMounted(() => checkRoute())
+onMounted(() => {
+    checkRoute()
+    onAuthStateChanged(getAuth(), user => {
+        store.commit('updateUser', user)
+
+        if (user) store.dispatch('getCurrentUser')
+    })
+})
 
 watch(route, checkRoute)
 </script>
