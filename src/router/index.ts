@@ -42,9 +42,9 @@ const router = createRouter({
             }
         },
         {
-            path: '/blogs',
+            path: '/posts',
             name: 'Blogs',
-            component: () => import('../views/Blogs.vue'),
+            component: () => import('../views/posts/Index.vue'),
             meta: {
                 title: 'Blogs'
             }
@@ -59,8 +59,11 @@ const router = createRouter({
         },
         {
             path: '/posts/preview',
-            name: 'BlogPreview',
-            component: () => import('@/views/posts/Create.vue')
+            name: 'PreviewPost',
+            component: () => import('@/views/posts/Preview.vue'),
+            meta: {
+                title: 'Preview Post'
+            }
         },
         {
             path: '/profile',

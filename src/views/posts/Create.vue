@@ -4,7 +4,7 @@
         <Loading v-show="loading"/>
         <div class="container">
             <div :class="{ invisible: !error }" class="err-message">
-                <p><span>Error:</span>{{ errorMsg }}</p>
+                <p><span>Error: </span>{{ errorMsg }}</p>
             </div>
             <div class="blog-info">
                 <input type="text" placeholder="Enter Blog Title" v-model="blogTitle"/>
@@ -23,8 +23,8 @@
                             @image-added="imageHandler"/>
             </div>
             <div class="blog-actions">
-                <button @click="uploadBlog">Publish Blog</button>
-                <router-link class="router-button" :to="{ name: 'BlogPreview' }">Post Preview</router-link>
+                <button @click="uploadPost">Publish Blog</button>
+                <router-link class="router-button" :to="{ name: 'PreviewPost' }">Post Preview</router-link>
             </div>
         </div>
     </div>
@@ -34,19 +34,24 @@
 import Loading from "@/components/Loading.vue";
 import { store } from "@/store";
 import { VueEditor } from "vue3-editor";
-// import ImageResize from 'quill-image-resize-module';
+import Quill from 'quill';
+import ImageResize from 'quill-image-resize';
 import { computed, ref } from "vue";
 import BlogCoverPreview from "@/components/BlogCoverPreview.vue";
+import { getDownloadURL, ref as sRef, uploadBytesResumable } from "firebase/storage";
+import { storage } from "@/firebase/firebaseInit";
 
-// Quill.register('modules/imageResize', ImageResize);
+Quill.register('modules/imageResize', ImageResize);
 
 const file = ref(null),
     blogPhoto = ref(null),
-    error = ref(null),
-    errorMsg = ref(null),
+    error = ref(false),
+    errorMsg = ref(""),
     editorSettings = ref({
         modules: {
-            // imageResize: {}
+            imageResize: {
+                parchment: Quill.import('parchment')
+            }
         }
     })
 
@@ -60,6 +65,50 @@ const fileChange = () => {
 }
 
 const openPreview = () => store.commit('openPhotoPreview')
+
+const imageHandler = (file, Editor, cursorLocation, resetUploader) => {
+    const storageRef = sRef(storage, `documents/post-photos/${file.name}`),
+        uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on('state_changed', snapshot => {
+        console.log(snapshot)
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+    }, err => {
+        console.log(err)
+        console.log(err.serverResponse)
+    }, () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            Editor.insertEmbed(cursorLocation, 'image', downloadURL)
+
+            console.log('File available at', downloadURL);
+
+            resetUploader()
+        });
+    })
+}
+
+const uploadPost = () => {
+    if(!file.value) {
+        error.value = true
+        errorMsg.value = "Please ensure you upload a cover photo!"
+
+        setTimeout(() => error.value = false, 5000)
+
+        return
+    }
+
+    if (blogTitle.value.length === 0 || blogHTML.value.length === 0) {
+        error.value = true
+        errorMsg.value = "Please ensure blog title and blog post have been filled!"
+
+        setTimeout(() => error.value = false, 5000)
+
+        return
+    }
+
+
+}
 
 const profileId = computed(() => store.state.profileId),
     blogCoverPhotoName = computed(() => store.state.blogPhotoName),
