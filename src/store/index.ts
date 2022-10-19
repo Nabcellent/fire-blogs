@@ -1,6 +1,6 @@
 import type { InjectionKey } from "vue";
 import { createStore, Store, useStore as baseUseStore } from 'vuex'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import db from '../firebase/firebaseInit'
 import { getAuth } from "firebase/auth";
 
@@ -48,6 +48,15 @@ export const store = createStore({
 
             if (firstInitial && lastInitial)
                 state.profileInitials = firstInitial + lastInitial
+        },
+        changeFirstName(state, payload) {
+            state.profileFirstName = payload
+        },
+        changeLastName(state, payload) {
+            state.profileLastName = payload
+        },
+        changeUsername(state, payload) {
+            state.profileUsername = payload
         }
     },
     actions: {
@@ -62,6 +71,15 @@ export const store = createStore({
             } else {
                 console.log("No such document!");
             }
+        },
+        async updateUserSettings({ commit, state }) {
+            await updateDoc(doc(db, 'users', String(state.profileId)), {
+                first_name: state.profileFirstName,
+                last_name: state.profileLastName,
+                username: state.profileUsername
+            })
+
+            commit('setProfileInitials')
         }
     }
 })
