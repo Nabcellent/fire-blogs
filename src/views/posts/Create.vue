@@ -42,10 +42,12 @@ import { getDownloadURL, ref as sRef, uploadBytesResumable } from "firebase/stor
 import { storage } from "@/firebase/firebaseInit";
 import { collection, doc, setDoc } from "firebase/firestore";
 import db from "../../firebase/firebaseInit";
+import router from "@/router";
 
 Quill.register('modules/imageResize', ImageResize);
 
 const file = ref(null),
+    loading = ref(false),
     blogPhoto = ref(null),
     error = ref(false),
     errorMsg = ref(""),
@@ -108,6 +110,8 @@ const uploadPost = () => {
         return
     }
 
+    loading.value = true
+
     const storageRef = sRef(storage, `documents/cover-photos/${store.state.blogPhotoName}`),
         uploadTask = uploadBytesResumable(storageRef, file.value);
 
@@ -115,12 +119,13 @@ const uploadPost = () => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload is ' + progress + '% done');
     }, err => {
+        loading.value = false
         console.log(err)
     }, async () => {
         const downloadURL = await getDownloadURL(uploadTask.snapshot.ref),
             timestamp = Date.now()
 
-        const newPost = doc(collection(db, "users"));
+        const newPost = doc(collection(db, "posts"));
 
         await setDoc(newPost, {
             id: newPost.id,
@@ -131,6 +136,10 @@ const uploadPost = () => {
             profile_id: profileId.value,
             date: timestamp
         })
+
+        loading.value = false
+
+        await router.push({name: 'ViewPost'})
     })
 }
 

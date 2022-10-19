@@ -1,12 +1,13 @@
 import type { InjectionKey } from "vue";
 import { createStore, Store, useStore as baseUseStore } from 'vuex'
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc } from 'firebase/firestore'
 import db from '../firebase/firebaseInit'
 import { getAuth } from "firebase/auth";
 
 export interface State {
     sampleBlogCards: { title: string, blogCoverPhoto: string, blogDate: string }[]
     editPost?: boolean
+    blogPosts: { id: string }[]
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -19,12 +20,14 @@ export const store = createStore({
             { title: 'Blog card #3', blogCoverPhoto: 'stock-3', blogDate: 'May 1 2021' },
             { title: 'Blog card #4', blogCoverPhoto: 'stock-4', blogDate: 'May 1 2021' },
         ],
+        blogPosts: [],
+        postLoaded: false,
         blogHTML: 'Write your blog title here...',
         blogTitle: '',
         blogPhotoName: '',
         blogPhotoFileURL: null,
         blogPhotoPreview: false,
-        editPost: null,
+        editPost: false,
 
         user: null,
         profileId: null,
@@ -96,6 +99,19 @@ export const store = createStore({
             } else {
                 console.log("No such document!");
             }
+        },
+        async getPosts({ state }) {
+            const q = query(collection(db, "posts"), orderBy('date', 'desc'));
+            const snaps = await getDocs(q);
+
+            snaps.forEach(doc => {
+                if (!state.blogPosts.some((post: { id: string }) => post.id === doc.id)) {
+                    // @ts-ignore
+                    state.blogPosts.push(doc.data())
+                }
+            })
+
+            state.postLoaded = true
         },
         async updateUserSettings({ commit, state }) {
             await updateDoc(doc(db, 'users', String(state.profileId)), {

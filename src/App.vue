@@ -37,6 +37,8 @@ onMounted(() => {
 
         if (user) store.dispatch('getCurrentUser')
     })
+
+    store.dispatch('getPosts')
 })
 
 watch(route, checkRoute)

@@ -64,7 +64,7 @@ const router = createRouter({
             meta: {
                 title: 'Preview Post'
             }
-        },,
+        },
         {
             path: '/posts/view',
             name: 'ViewPost',
