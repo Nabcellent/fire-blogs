@@ -16,7 +16,7 @@ import { useRoute } from "vue-router";
 
 const route = useRoute()
 
-const currentBlog = ref([])
+const currentBlog = ref<{ id: string, title: string, html: string, cover_photo: string, date: string }[]>([])
 
 onMounted(async () => {
     currentBlog.value = store.state.blogPosts.filter((post: { id: string }) => post.id === route.params.id);

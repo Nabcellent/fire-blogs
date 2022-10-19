@@ -19,11 +19,11 @@
             </div>
         </div>
 
-        <img :src="post.cover_photo" alt="">
+        <img :src="post?.cover_photo" alt="">
         <div class="info">
-            <h4>{{ post.title }}</h4>
-            <h6>Posted on: {{ new Date(post.date).toLocaleString('en-gb', {dateStyle: 'long'}) }}</h6>
-            <router-link :to="{name:'ViewPost', params:{id:post.id}}" class="link">
+            <h4>{{ post?.title }}</h4>
+            <h6>Posted on: {{ new Date(post?.date).toLocaleString('en-gb', {dateStyle: 'long'}) }}</h6>
+            <router-link :to="{name:'ViewPost', params:{id:post?.id}}" class="link">
                 View the post
                 <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="arrow-right"
                      class="arrow svg-inline--fa fa-arrow-right fa-w-14" role="img"

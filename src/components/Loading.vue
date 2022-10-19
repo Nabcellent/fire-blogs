@@ -2,9 +2,7 @@
     <div class="loading"><span></span></div>
 </template>
 
-<script setup>
-
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss">
 .loading {

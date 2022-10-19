@@ -18,7 +18,7 @@ export const store = createStore({
         blogHTML: 'Write your blog title here...',
         blogTitle: '',
         blogPhotoName: '',
-        blogPhotoFileURL: null,
+        blogPhotoFileURL: "",
         blogPhotoPreview: false,
         editPost: false,
 

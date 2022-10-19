@@ -6,8 +6,8 @@
     "src/**/*.vue"
   ],
   "compilerOptions": {
+    "allowJs": true,
     "strict": true,
-    "jsx": "preserve",
     "sourceMap": true,
     "target": "esnext",
     "module": "esnext",
