@@ -26,7 +26,7 @@
                         </div>
                         <div class="options">
                             <div class="option">
-                                <router-link to="#" class="option">
+                                <router-link :to="{name:'Profile'}" class="option">
                                     <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="user-alt"
                                          class="icon svg-inline--fa fa-user-alt fa-w-16" role="img"
                                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -37,7 +37,7 @@
                                 </router-link>
                             </div>
                             <div class="option">
-                                <router-link to="#" class="option">
+                                <router-link :to="{name:'Admin'}" class="option">
                                     <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="user-crown"
                                          class="icon svg-inline--fa fa-user-crown fa-w-14" role="img"
                                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">

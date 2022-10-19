@@ -34,6 +34,8 @@ const router = createRouter({
         {
             path: '/',
             name: 'Home',
+            // route level code-splitting this generates a separate chunk (Blogs.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
             component: () => import('../views/Home.vue'),
             meta: {
                 title: 'Home'
@@ -42,8 +44,6 @@ const router = createRouter({
         {
             path: '/blogs',
             name: 'Blogs',
-            // route level code-splitting this generates a separate chunk (Blogs.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
             component: () => import('../views/Blogs.vue'),
             meta: {
                 title: 'Blogs'
@@ -53,6 +53,22 @@ const router = createRouter({
             path: '/blogs',
             name: 'CreatePost',
             component: Home
+        },
+        {
+            path: '/profile',
+            name: 'Profile',
+            component: () => import('../views/Profile.vue'),
+            meta: {
+                title: 'Profile'
+            }
+        },
+        {
+            path: '/admin',
+            name: 'Admin',
+            component: () => import('../views/Admin.vue'),
+            meta: {
+                title: 'Admin'
+            }
         }
     ]
 })
