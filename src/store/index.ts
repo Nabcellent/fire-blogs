@@ -7,19 +7,12 @@ import { getAuth } from "firebase/auth";
 export interface State {
     sampleBlogCards: { title: string, blogCoverPhoto: string, blogDate: string }[]
     editPost?: boolean
-    blogPosts: { id: string }[]
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
 
 export const store = createStore({
     state: {
-        sampleBlogCards: [
-            { title: 'Blog card #1', blogCoverPhoto: 'stock-1', blogDate: 'May 1 2021' },
-            { title: 'Blog card #2', blogCoverPhoto: 'stock-2', blogDate: 'May 1 2021' },
-            { title: 'Blog card #3', blogCoverPhoto: 'stock-3', blogDate: 'May 1 2021' },
-            { title: 'Blog card #4', blogCoverPhoto: 'stock-4', blogDate: 'May 1 2021' },
-        ],
         blogPosts: [],
         postLoaded: false,
         blogHTML: 'Write your blog title here...',
@@ -37,6 +30,14 @@ export const store = createStore({
         profileUsername: null,
         profileInitials: "",
         isAdmin: false
+    },
+    getters: {
+        blogPostsFeed(state) {
+            return state.blogPosts.slice(0, 2)
+        },
+        blogPostCards(state) {
+            return state.blogPosts.slice(2, 6)
+        }
     },
     mutations: {
         newBlogPost(state, payload) {

@@ -1,13 +1,13 @@
 <template>
     <div class="home">
         <BlogPost v-if="!user" :post="welcomeScreen"/>
-        <BlogPost v-for="(post, i) in sampleBlogPost" :key="i" :post="post"/>
+        <BlogPost v-for="(post, i) in blogPostFeed" :key="i" :post="post"/>
 
         <div class="blog-card-wrap">
             <div class="container">
                 <h3>View More Recent Blogs</h3>
                 <div class="blog-cards">
-                    <BlogCard v-for="(post, i) in sampleBlogCards" :key="i" :post="post"/>
+                    <BlogCard v-for="(post, i) in blogPostCards" :key="i" :post="post"/>
                 </div>
             </div>
         </div>
@@ -44,21 +44,9 @@ const welcomeScreen = ref({
     photo: "coding",
 })
 
-const sampleBlogPost = ref([
-    {
-        title: 'This is a filler title!',
-        blogHTML: 'This is a filler blog post title!',
-        blogCoverPhoto: 'beautiful-stories',
-    },
-    {
-        title: 'This is a filler title!',
-        blogHTML: 'This is a filler blog post title!',
-        blogCoverPhoto: 'designed-for-everyone',
-    }
-])
-
 const user = computed(() => store.state.user)
-const sampleBlogCards = computed(() => store.state.sampleBlogCards)
+const blogPostFeed = computed(() => store.getters.blogPostsFeed)
+const blogPostCards = computed(() => store.getters.blogPostCards)
 </script>
 
 <style lang="scss" scoped>

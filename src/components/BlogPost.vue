@@ -5,7 +5,7 @@
                 <h2 v-if="post.welcomeScreen">{{ post.title }}</h2>
                 <h2 v-else>{{ post.title }}</h2>
                 <p v-if="post.welcomeScreen">{{ post.blogPost }}</p>
-                <p v-else class="content-preview">{{ post.blogHTML }}</p>
+                <p v-else class="content-preview" v-html="post.html"/>
 
                 <router-link v-if="post.welcomeScreen" class="link link-light" to="#">
                     Sign In / Sign Up
@@ -32,7 +32,7 @@
 
         <div class="blog-photo">
             <img v-if="post.welcomeScreen" :src="`../src/assets/blogPhotos/${post.photo}.jpg`" alt="">
-            <img v-else :src="`../src/assets/blogPhotos/${post.blogCoverPhoto}.jpg`" alt="">
+            <img v-else :src="post.cover_photo" alt="">
         </div>
     </div>
 </template>

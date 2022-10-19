@@ -6,19 +6,17 @@
                 <input type="checkbox" v-model="editPost">
             </div>
 
-            <BlogCard v-for="(post, i) in sampleBlogCards" :key="i" :post="post"/>
+            <BlogCard v-for="(post, i) in blogPosts" :key="i" :post="post"/>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount } from "vue";
-import { useStore } from "@/store";
+import { store } from "@/store";
 import BlogCard from "@/components/BlogCard.vue";
 
-const store = useStore()
-
-const sampleBlogCards = computed(() => store.state.sampleBlogCards)
+const blogPosts = computed(() => store.state.blogPosts)
 const editPost = computed({
     get() {
         return store.state.editPost

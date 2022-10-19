@@ -100,7 +100,6 @@ const uploadPost = () => {
 
         return
     }
-
     if (blogTitle.value.length === 0 || blogHTML.value.length === 0) {
         error.value = true
         errorMsg.value = "Please ensure blog title and blog post have been filled!"

@@ -19,10 +19,10 @@
             </div>
         </div>
 
-        <img :src="`../src/assets/blogCards/${post.blogCoverPhoto}.jpg`" alt="">
+        <img :src="post.cover_photo" alt="">
         <div class="info">
-            <h4>{{ post.blogTitle }}</h4>
-            <h6>Posted on: {{ post.blogDate }}</h6>
+            <h4>{{ post.title }}</h4>
+            <h6>Posted on: {{ new Date(post.date).toLocaleString('en-gb', {dateStyle: 'long'}) }}</h6>
             <router-link to="#" class="link">
                 View the post
                 <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="arrow-right"
@@ -41,7 +41,7 @@
 import { computed } from "vue";
 import { useStore } from "@/store";
 
-defineProps({ post: Object })
+defineProps({post: Object})
 
 const store = useStore()
 

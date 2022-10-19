@@ -17,12 +17,10 @@ import { useRoute } from "vue-router";
 
 const route = useRoute()
 
-const currentBlog = ref(null)
+const currentBlog = ref([])
 
 onMounted(async () => {
-    currentBlog.value = await store.state.blogPosts.filter(post => {
-        return post.blogID === route.params.id;
-    });
+    currentBlog.value = store.state.blogPosts.filter((post: { id: string }) => post.id === route.params.id);
 })
 </script>
 
