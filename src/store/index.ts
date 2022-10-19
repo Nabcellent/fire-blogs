@@ -1,6 +1,6 @@
 import type { InjectionKey } from "vue";
 import { createStore, Store, useStore as baseUseStore } from 'vuex'
-import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc } from 'firebase/firestore'
+import { collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, updateDoc } from 'firebase/firestore'
 import db from '../firebase/firebaseInit'
 import { getAuth } from "firebase/auth";
 
@@ -58,6 +58,15 @@ export const store = createStore({
         toggleEditPost(state, payload) {
             state.editPost = payload
         },
+        setBlogState(state, payload) {
+            state.blogTitle = payload.title
+            state.blogHTML = payload.html
+            state.blogPhotoFileURL = payload.cover_photo
+            state.blogPhotoName = payload.cover_photo_name
+        },
+        filterBlogPosts(state, payload) {
+            state.blogPosts = state.blogPosts.filter((p: { id: string }) => p.id !== payload)
+        },
         updateUser(state, payload) {
             state.user = payload
         },
@@ -113,6 +122,16 @@ export const store = createStore({
             })
 
             state.postLoaded = true
+        },
+        async updatePost({ commit, dispatch }, payload) {
+            commit('filterBlogPosts', payload)
+
+            await dispatch('getPosts')
+        },
+        async deletePost({ commit }, payload) {
+            await deleteDoc(doc(db, 'posts', payload))
+
+            commit('filterBlogPosts', payload)
         },
         async updateUserSettings({ commit, state }) {
             await updateDoc(doc(db, 'users', String(state.profileId)), {
