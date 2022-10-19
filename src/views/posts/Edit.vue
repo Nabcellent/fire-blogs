@@ -156,8 +156,7 @@ const updatePost = async () => {
     setTimeout(() => error.value = false, 5000)
 }
 
-const profileId = computed(() => store.state.profileId),
-    blogCoverPhotoName = computed(() => store.state.blogPhotoName),
+const blogCoverPhotoName = computed(() => store.state.blogPhotoName),
     blogTitle = computed({
         get: () => store.state.blogTitle,
         set: payload => store.commit('updateBlogTitle', payload)

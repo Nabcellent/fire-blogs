@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/auth/Login.vue'
 import Register from '../views/auth/Register.vue'
 import ForgotPassword from '../views/auth/ForgotPassword.vue'
+import { getAuth } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import db from "@/firebase/firebaseInit";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +14,8 @@ const router = createRouter({
             name: 'Login',
             component: Login,
             meta: {
-                title: 'Login'
+                title: 'Login',
+                requiresAuth: false
             }
         },
         {
@@ -19,7 +23,8 @@ const router = createRouter({
             name: 'Register',
             component: Register,
             meta: {
-                title: 'Register'
+                title: 'Register',
+                requiresAuth: false
             }
         },
         {
@@ -27,7 +32,8 @@ const router = createRouter({
             name: 'ForgotPassword',
             component: ForgotPassword,
             meta: {
-                title: 'Forgot Password'
+                title: 'Forgot Password',
+                requiresAuth: false
             }
         },
         {
@@ -37,7 +43,8 @@ const router = createRouter({
             // which is lazy-loaded when the route is visited.
             component: () => import('../views/Home.vue'),
             meta: {
-                title: 'Home'
+                title: 'Home',
+                requiresAuth: false
             }
         },
         {
@@ -45,7 +52,8 @@ const router = createRouter({
             name: 'Blogs',
             component: () => import('../views/posts/Index.vue'),
             meta: {
-                title: 'Blogs'
+                title: 'Blogs',
+                requiresAuth: false
             }
         },
         {
@@ -53,7 +61,9 @@ const router = createRouter({
             name: 'CreatePost',
             component: () => import('@/views/posts/Create.vue'),
             meta: {
-                title: 'Create Post'
+                title: 'Create Post',
+                requiresAuth: true,
+                requiresAdmin: true
             }
         },
         {
@@ -61,7 +71,9 @@ const router = createRouter({
             name: 'PreviewPost',
             component: () => import('@/views/posts/Preview.vue'),
             meta: {
-                title: 'Preview Post'
+                title: 'Preview Post',
+                requiresAuth: true,
+                requiresAdmin: true
             }
         },
         {
@@ -69,7 +81,8 @@ const router = createRouter({
             name: 'ViewPost',
             component: () => import('@/views/posts/View.vue'),
             meta: {
-                title: 'View Post'
+                title: 'View Post',
+                requiresAuth: false,
             }
         },
         {
@@ -77,7 +90,9 @@ const router = createRouter({
             name: 'EditPost',
             component: () => import('@/views/posts/Edit.vue'),
             meta: {
-                title: 'Edit Post'
+                title: 'Edit Post',
+                requiresAuth: true,
+                requiresAdmin: true
             }
         },
         {
@@ -85,7 +100,8 @@ const router = createRouter({
             name: 'Profile',
             component: () => import('../views/Profile.vue'),
             meta: {
-                title: 'Profile'
+                title: 'Profile',
+                requiresAuth: true
             }
         },
         {
@@ -93,7 +109,9 @@ const router = createRouter({
             name: 'Admin',
             component: () => import('../views/Admin.vue'),
             meta: {
-                title: 'Admin'
+                title: 'Admin',
+                requiresAuth: true,
+                requiresAdmin: true
             }
         }
     ]
@@ -102,6 +120,30 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     document.title = `${to.meta.title} | FireBlog`
     next()
+})
+
+router.beforeEach(async (to, from, next) => {
+    const user = getAuth().currentUser,
+        snap = await getDoc(doc(db, 'users', String(user?.uid)))
+    let admin = false
+
+    if (user) admin = Boolean(snap.data()?.is_admin)
+
+    if (to.matched.some(res => res.meta.requiresAuth)) {
+        if (user) {
+            if (to.matched.some(res => res.meta.requiresAdmin)) {
+                if (admin) return next()
+
+                return next({ name: 'Home' })
+            }
+
+            return next()
+        }
+
+        return next({ name: 'Home' })
+    }
+
+    return next()
 })
 
 export default router
