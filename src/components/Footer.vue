@@ -51,7 +51,7 @@
                     <ul>
                         <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
                         <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
-                        <router-link v-if="admin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
+                        <router-link v-if="isAdmin" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
                         <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Sign In</router-link>
                     </ul>
                 </div>
@@ -68,6 +68,7 @@ import { computed } from "vue";
 import { store } from "@/store";
 
 const user = computed(() => store.state.user)
+const isAdmin = computed(() => store.state.isAdmin)
 </script>
 
 <style lang="scss" scoped>

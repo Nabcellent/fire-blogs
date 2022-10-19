@@ -31,6 +31,7 @@ const checkRoute = () => {
 
 onMounted(() => {
     checkRoute()
+    
     onAuthStateChanged(getAuth(), user => {
         store.commit('updateUser', user)
 

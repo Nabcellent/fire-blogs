@@ -27,6 +27,7 @@ export const store = createStore({
         profileLastName: "",
         profileUsername: null,
         profileInitials: "",
+        isAdmin: false
     },
     mutations: {
         toggleEditPost(state, payload) {
@@ -34,6 +35,10 @@ export const store = createStore({
         },
         updateUser(state, payload) {
             state.user = payload
+        },
+        setProfileAdmin(state, payload) {
+            state.isAdmin = payload
+            console.log(state.isAdmin)
         },
         setProfileInfo(state, doc) {
             state.profileId = doc.id
@@ -66,8 +71,7 @@ export const store = createStore({
             if (snap.exists()) {
                 commit('setProfileInfo', snap)
                 commit('setProfileInitials')
-
-                console.log(snap)
+                commit('setProfileAdmin', Boolean(snap.data().is_admin))
             } else {
                 console.log("No such document!");
             }

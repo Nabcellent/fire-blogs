@@ -9,7 +9,7 @@
                 <ul v-show="!mobile">
                     <router-link class="link" :to="{name:'Home'}">Home</router-link>
                     <router-link class="link" :to="{name:'Blogs'}">Blogs</router-link>
-                    <router-link class="link" to="#">Create Post</router-link>
+                    <router-link v-if="isAdmin" class="link" to="#">Create Post</router-link>
                     <router-link v-if="!user" class="link" :to="{name:'Login'}">Sign In</router-link>
                 </ul>
 
@@ -36,7 +36,7 @@
                                     <p>Profile</p>
                                 </router-link>
                             </div>
-                            <div class="option">
+                            <div v-if="isAdmin" class="option">
                                 <router-link :to="{name:'Admin'}" class="option">
                                     <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="user-crown"
                                          class="icon svg-inline--fa fa-user-crown fa-w-14" role="img"
@@ -66,7 +66,7 @@
             <ul class="mobile-nav" v-show="mobileNav">
                 <router-link class="link" :to="{name:'Home'}">Home</router-link>
                 <router-link class="link" :to="{name:'Blogs'}">Blogs</router-link>
-                <router-link class="link" to="#">Create Post</router-link>
+                <router-link v-if="isAdmin" class="link" to="#">Create Post</router-link>
                 <router-link v-if="!user" class="link" :to="{name:'Login'}">Sign In</router-link>
             </ul>
         </transition>
@@ -115,6 +115,7 @@ const logout = () => {
 }
 
 const user = computed(() => store.state.user)
+const isAdmin = computed(() => store.state.isAdmin)
 </script>
 
 <style lang="scss" scoped>

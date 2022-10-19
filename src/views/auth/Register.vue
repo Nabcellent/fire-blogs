@@ -56,7 +56,7 @@
                 <div v-show="error" class="error">{{ errorMsg }}</div>
             </div>
 
-            <button @click.prevent="register">Sign In</button>
+            <button @click.prevent="register">Sign Up</button>
             <div class="angle"/>
         </form>
 
