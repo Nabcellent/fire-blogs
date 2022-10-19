@@ -64,6 +64,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+import { store } from "@/store";
+
+const user = computed(() => store.state.user)
 </script>
 
 <style lang="scss" scoped>

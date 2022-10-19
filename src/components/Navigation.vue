@@ -10,12 +10,12 @@
                     <router-link class="link" :to="{name:'Home'}">Home</router-link>
                     <router-link class="link" :to="{name:'Blogs'}">Blogs</router-link>
                     <router-link class="link" to="#">Create Post</router-link>
-                    <router-link class="link" :to="{name:'Login'}">Sign In</router-link>
+                    <router-link v-if="!user" class="link" :to="{name:'Login'}">Sign In</router-link>
                 </ul>
 
-                <div class="profile" ref="profile">
+                <div v-if="user" class="profile" ref="profile" @click="toggleProfileMenu">
                     <span>{{ store.state.profileInitials }}</span>
-                    <div class="profile-menu">
+                    <div class="profile-menu" v-show="profileMenu">
                         <div class="info">
                             <p class="initials">{{ store.state.profileInitials }}</p>
                             <div class="right">
@@ -47,16 +47,14 @@
                                     <p>Admin</p>
                                 </router-link>
                             </div>
-                            <div class="option">
-                                <router-link to="#" class="option">
-                                    <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="sign-out-alt"
-                                         class="icon svg-inline--fa fa-sign-out-alt fa-w-16" role="img"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path fill="currentColor"
-                                              d="M272 112v51.6h-96c-26.5 0-48 21.5-48 48v88.6c0 26.5 21.5 48 48 48h96v51.6c0 42.6 51.7 64.2 81.9 33.9l144-143.9c18.7-18.7 18.7-49.1 0-67.9l-144-144C323.8 48 272 69.3 272 112zm192 144L320 400v-99.7H176v-88.6h144V112l144 144zM96 64h84c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H96c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h84c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H96c-53 0-96-43-96-96V160c0-53 43-96 96-96z"></path>
-                                    </svg>
-                                    <p>Sign Out</p>
-                                </router-link>
+                            <div @click="logout" class="option">
+                                <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="sign-out-alt"
+                                     class="icon svg-inline--fa fa-sign-out-alt fa-w-16" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path fill="currentColor"
+                                          d="M272 112v51.6h-96c-26.5 0-48 21.5-48 48v88.6c0 26.5 21.5 48 48 48h96v51.6c0 42.6 51.7 64.2 81.9 33.9l144-143.9c18.7-18.7 18.7-49.1 0-67.9l-144-144C323.8 48 272 69.3 272 112zm192 144L320 400v-99.7H176v-88.6h144V112l144 144zM96 64h84c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H96c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h84c6.6 0 12 5.4 12 12v24c0 6.6-5.4 12-12 12H96c-53 0-96-43-96-96V160c0-53 43-96 96-96z"></path>
+                                </svg>
+                                <p>Sign Out</p>
                             </div>
                         </div>
                     </div>
@@ -69,16 +67,18 @@
                 <router-link class="link" :to="{name:'Home'}">Home</router-link>
                 <router-link class="link" :to="{name:'Blogs'}">Blogs</router-link>
                 <router-link class="link" to="#">Create Post</router-link>
-                <router-link class="link" :to="{name:'Login'}">Sign In</router-link>
+                <router-link v-if="!user" class="link" :to="{name:'Login'}">Sign In</router-link>
             </ul>
         </transition>
     </header>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { store } from '@/store'
+import { getAuth } from "firebase/auth";
 
+const profileMenu = ref(false)
 const mobile = ref(false)
 const mobileNav = ref(false)
 const windowWidth = ref(window.innerWidth)
@@ -103,6 +103,18 @@ const checkScreen = () => {
 const toggleMobileNav = () => {
     mobileNav.value = !mobileNav.value
 }
+
+const toggleProfileMenu = () => {
+    profileMenu.value = !profileMenu.value
+}
+
+const logout = () => {
+    getAuth().signOut()
+
+    window.location.reload()
+}
+
+const user = computed(() => store.state.user)
 </script>
 
 <style lang="scss" scoped>

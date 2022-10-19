@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <BlogPost :post="welcomeScreen"/>
+        <BlogPost v-if="!user" :post="welcomeScreen"/>
         <BlogPost v-for="(post, i) in sampleBlogPost" :key="i" :post="post"/>
 
         <div class="blog-card-wrap">
@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="updates">
+        <div v-if="!user" class="updates">
             <div class="container">
                 <h2>Never miss a post. <b>Register for your free account today!</b></h2>
                 <router-link class="router-button" to="#">
@@ -34,9 +34,7 @@
 import { computed, ref } from "vue";
 import BlogPost from "@/components/BlogPost.vue";
 import BlogCard from "@/components/BlogCard.vue";
-import { useStore } from "@/store";
-
-const store = useStore()
+import { store } from "@/store";
 
 const welcomeScreen = ref({
     title: "Welcome!",
@@ -59,6 +57,7 @@ const sampleBlogPost = ref([
     }
 ])
 
+const user = computed(() => store.state.user)
 const sampleBlogCards = computed(() => store.state.sampleBlogCards)
 </script>
 

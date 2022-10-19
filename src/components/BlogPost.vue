@@ -1,5 +1,5 @@
 <template>
-    <div class="blog-wrapper no-user">
+    <div class="blog-wrapper" :class="{'no-user':!user}">
         <div class="blog-content">
             <div>
                 <h2 v-if="post.welcomeScreen">{{ post.title }}</h2>
@@ -38,7 +38,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+import { store } from "@/store";
+
 defineProps({ post: Object })
+
+const user = computed(() => store.state.user)
 </script>
 
 <style lang="scss" scoped>
