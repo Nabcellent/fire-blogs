@@ -19,7 +19,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.16.4":
+"@babel/parser@npm:^7.16.4, @babel/parser@npm:^7.18.4":
   version: 7.19.4
   resolution: "@babel/parser@npm:7.19.4"
   bin:
@@ -825,6 +825,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/vue2-editor@npm:^2":
+  version: 2.6.1
+  resolution: "@types/vue2-editor@npm:2.6.1"
+  dependencies:
+    vue: ^2.0.0
+  checksum: 51efceb9f484d7b0dd6129b8a47cf443410597a1a889d71e72aa313a8ff6e66dedda612e4216bca6b56a6ad62191dd4121142075e404d1368f4be4d002d66bb8
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:^5.0.0":
   version: 5.40.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.40.0"
@@ -1025,6 +1034,17 @@ __metadata:
     "@vue/compiler-core": 3.2.41
     "@vue/shared": 3.2.41
   checksum: 463f73d935930046678b769aa5439bdc8cfd7d2b7c07cae54a0201c842e6327f2416119442e08a401edaf6dc3dd1dfe5d7a4ce7faa31559bf36ba064e5530fe5
+  languageName: node
+  linkType: hard
+
+"@vue/compiler-sfc@npm:2.7.13":
+  version: 2.7.13
+  resolution: "@vue/compiler-sfc@npm:2.7.13"
+  dependencies:
+    "@babel/parser": ^7.18.4
+    postcss: ^8.4.14
+    source-map: ^0.6.1
+  checksum: c5e21f55f8951e184294b3dbfd13cb1b2bdc70be88c47c7ca1209f85b19bdb9df0a34dfa3720d75b538e34b63a5c9b8fa28b87eeedf3b84dbd03122f601dcf82
   languageName: node
   linkType: hard
 
@@ -1535,6 +1555,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:^3.6.5":
+  version: 3.25.5
+  resolution: "core-js@npm:3.25.5"
+  checksum: 208b308c49bc022f90d4349d4c99802a73c9d55053976b3c529f10014c1e37845926defad8c519f2c7f71ea0acf18d2b323ab6aaee34dc85b4c4b3ced0623f3f
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:~1.0.0":
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
@@ -1579,6 +1606,13 @@ __metadata:
   version: 2.6.21
   resolution: "csstype@npm:2.6.21"
   checksum: 2ce8bc832375146eccdf6115a1f8565a27015b74cce197c35103b4494955e9516b246140425ad24103864076aa3e1257ac9bab25a06c8d931dd87a6428c9dccf
+  languageName: node
+  linkType: hard
+
+"csstype@npm:^3.1.0":
+  version: 3.1.1
+  resolution: "csstype@npm:3.1.1"
+  checksum: 1f7b4f5fdd955b7444b18ebdddf3f5c699159f13e9cf8ac9027ae4a60ae226aef9bbb14a6e12ca7dba3358b007cee6354b116e720262867c398de6c955ea451d
   languageName: node
   linkType: hard
 
@@ -2259,6 +2293,7 @@ __metadata:
     "@rushstack/eslint-patch": ^1.1.4
     "@types/node": ^16.11.56
     "@types/quill": ^1
+    "@types/vue2-editor": ^2
     "@vitejs/plugin-vue": ^3.0.3
     "@vue/eslint-config-typescript": ^11.0.0
     "@vue/tsconfig": ^0.1.3
@@ -2276,6 +2311,8 @@ __metadata:
     vue: ^3.2.38
     vue-router: ^4.1.5
     vue-tsc: ^0.40.7
+    vue2-editor: ^2.10.3
+    vue3-editor: ^0.1.1
     vuex: next
   languageName: unknown
   linkType: soft
@@ -3601,7 +3638,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.1.10, postcss@npm:^8.4.16":
+"postcss@npm:^8.1.10, postcss@npm:^8.4.14, postcss@npm:^8.4.16":
   version: 8.4.18
   resolution: "postcss@npm:8.4.18"
   dependencies:
@@ -3734,7 +3771,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"quill@npm:^1.2.2, quill@npm:^1.3.7":
+"quill@npm:^1.2.2, quill@npm:^1.3.6, quill@npm:^1.3.7":
   version: 1.3.7
   resolution: "quill@npm:1.3.7"
   dependencies:
@@ -4529,6 +4566,37 @@ __metadata:
   bin:
     vue-tsc: bin/vue-tsc.js
   checksum: 00e5cb424f1ab1a198489400b165a1d3968f85bf2747fe1cc8d8ac7161752a407d68e703f0132a547eaa8b236d1454627b92771cf268a968e5ac191b18de9690
+  languageName: node
+  linkType: hard
+
+"vue2-editor@npm:^2.10.3":
+  version: 2.10.3
+  resolution: "vue2-editor@npm:2.10.3"
+  dependencies:
+    quill: ^1.3.6
+  checksum: 4f522e6a789c12d7c78312c2d1d1e2a87a517a41201a58c8438e31885bd6810f42b1761ea9697e52e7846b6a5a6c38821f5d1ddf752c8aa268bca0b457f4aba0
+  languageName: node
+  linkType: hard
+
+"vue3-editor@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "vue3-editor@npm:0.1.1"
+  dependencies:
+    core-js: ^3.6.5
+    quill: ^1.3.7
+  peerDependencies:
+    vue: ^3.0.0
+  checksum: 5a633543de96bda208a302f8825896851ec0d80980f1577792b7e3e043ebc886d212a559ce3c58a5639afb6903df70693d338817e9dbb50fef07c414d84bb91f
+  languageName: node
+  linkType: hard
+
+"vue@npm:^2.0.0":
+  version: 2.7.13
+  resolution: "vue@npm:2.7.13"
+  dependencies:
+    "@vue/compiler-sfc": 2.7.13
+    csstype: ^3.1.0
+  checksum: b54f6a307f19ebeca5ed24a08befb7141e57e56d0367dc8179dca69ca3f6fc8cf18cbf084387d79b4e8528bb53b645af5338d1322359009e2c27a19fb25a1a8f
   languageName: node
   linkType: hard
 

@@ -19,9 +19,8 @@
                 </div>
             </div>
             <div class="editor">
-                <QuillEditor theme="snow" :options="editorSettings" v-model="blogHTML" />
-                <!--                <vue-editor :editorOptions="editorSettings" v-model="blogHTML" useCustomImageHandler-->
-                <!--                            @image-added="imageHandler"/>-->
+                <vue-editor :editorOptions="editorSettings" v-model="blogHTML" useCustomImageHandler
+                            @image-added="imageHandler"/>
             </div>
             <div class="blog-actions">
                 <button @click="uploadBlog">Publish Blog</button>
@@ -34,19 +33,43 @@
 <script setup>
 import Loading from "@/components/Loading.vue";
 import { store } from "@/store";
-import { QuillEditor } from '@vueup/vue-quill'
+import { VueEditor } from "vue3-editor";
 // import ImageResize from 'quill-image-resize-module';
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import BlogCoverPreview from "@/components/BlogCoverPreview.vue";
 
 // Quill.register('modules/imageResize', ImageResize);
 
-const error = ref(null),
+const file = ref(null),
+    blogPhoto = ref(null),
+    error = ref(null),
     errorMsg = ref(null),
     editorSettings = ref({
         modules: {
             // imageResize: {}
         }
+    })
+
+const fileChange = () => {
+    file.value = blogPhoto.value.files[0]
+
+    const fileName = file.value.name
+
+    store.commit('fileNameChange', fileName)
+    store.commit('createFileURL', URL.createObjectURL(file.value))
+}
+
+const openPreview = () => store.commit('openPhotoPreview')
+
+const profileId = computed(() => store.state.profileId),
+    blogCoverPhotoName = computed(() => store.state.blogPhotoName),
+    blogTitle = computed({
+        get: () => store.state.blogTitle,
+        set: payload => store.commit('updateBlogTitle', payload)
+    }),
+    blogHTML = computed({
+        get: () => store.state.blogHTML,
+        set: payload => store.commit('newBlogPost', payload)
     })
 </script>
 

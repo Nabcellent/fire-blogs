@@ -23,7 +23,7 @@ export const store = createStore({
         blogTitle: '',
         blogPhotoName: '',
         blogPhotoFileURL: null,
-        blogPhotoPreview: null,
+        blogPhotoPreview: false,
         editPost: null,
 
         user: null,
@@ -36,6 +36,21 @@ export const store = createStore({
         isAdmin: false
     },
     mutations: {
+        newBlogPost(state, payload) {
+            state.blogHTML = payload
+        },
+        updateBlogTitle(state, payload) {
+            state.blogTitle = payload
+        },
+        fileNameChange(state, payload) {
+            state.blogPhotoName = payload
+        },
+        createFileURL(state, payload) {
+            state.blogPhotoFileURL = payload
+        },
+        openPhotoPreview(state) {
+            state.blogPhotoPreview = !state.blogPhotoPreview
+        },
         toggleEditPost(state, payload) {
             state.editPost = payload
         },
