@@ -136,9 +136,11 @@ const uploadPost = () => {
             date: timestamp
         })
 
+        await store.dispatch('getPosts')
+
         loading.value = false
 
-        await router.push({name: 'ViewPost'})
+        await router.push({name: 'ViewPost', params: {id: newPost.id}})
     })
 }
 

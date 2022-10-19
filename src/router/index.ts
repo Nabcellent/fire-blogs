@@ -66,7 +66,7 @@ const router = createRouter({
             }
         },
         {
-            path: '/posts/view',
+            path: '/posts/:id',
             name: 'ViewPost',
             component: () => import('@/views/posts/View.vue'),
             meta: {
