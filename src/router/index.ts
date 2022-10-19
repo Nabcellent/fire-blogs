@@ -64,6 +64,14 @@ const router = createRouter({
             meta: {
                 title: 'Preview Post'
             }
+        },,
+        {
+            path: '/posts/view',
+            name: 'ViewPost',
+            component: () => import('@/views/posts/View.vue'),
+            meta: {
+                title: 'View Post'
+            }
         },
         {
             path: '/profile',

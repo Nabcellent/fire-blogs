@@ -40,6 +40,8 @@ import { computed, ref } from "vue";
 import BlogCoverPreview from "@/components/BlogCoverPreview.vue";
 import { getDownloadURL, ref as sRef, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/firebase/firebaseInit";
+import { collection, doc, setDoc } from "firebase/firestore";
+import db from "../../firebase/firebaseInit";
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -71,7 +73,6 @@ const imageHandler = (file, Editor, cursorLocation, resetUploader) => {
         uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on('state_changed', snapshot => {
-        console.log(snapshot)
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload is ' + progress + '% done');
     }, err => {
@@ -89,7 +90,7 @@ const imageHandler = (file, Editor, cursorLocation, resetUploader) => {
 }
 
 const uploadPost = () => {
-    if(!file.value) {
+    if (!file.value) {
         error.value = true
         errorMsg.value = "Please ensure you upload a cover photo!"
 
@@ -107,7 +108,30 @@ const uploadPost = () => {
         return
     }
 
+    const storageRef = sRef(storage, `documents/cover-photos/${store.state.blogPhotoName}`),
+        uploadTask = uploadBytesResumable(storageRef, file.value);
 
+    uploadTask.on('state_changed', snapshot => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+    }, err => {
+        console.log(err)
+    }, async () => {
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref),
+            timestamp = Date.now()
+
+        const newPost = doc(collection(db, "users"));
+
+        await setDoc(newPost, {
+            id: newPost.id,
+            title: blogTitle.value,
+            html: blogHTML.value,
+            cover_photo: downloadURL,
+            cover_photo_name: blogCoverPhotoName.value,
+            profile_id: profileId.value,
+            date: timestamp
+        })
+    })
 }
 
 const profileId = computed(() => store.state.profileId),
