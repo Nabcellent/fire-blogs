@@ -50,9 +50,17 @@ const router = createRouter({
             }
         },
         {
-            path: '/blogs',
+            path: '/posts/create',
             name: 'CreatePost',
-            component: Home
+            component: () => import('@/views/posts/Create.vue'),
+            meta: {
+                title: 'Create Post'
+            }
+        },
+        {
+            path: '/posts/preview',
+            name: 'BlogPreview',
+            component: () => import('@/views/posts/Create.vue')
         },
         {
             path: '/profile',

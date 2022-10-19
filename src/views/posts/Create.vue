@@ -19,8 +19,9 @@
                 </div>
             </div>
             <div class="editor">
-                <vue-editor :editorOptions="editorSettings" v-model="blogHTML" useCustomImageHandler
-                            @image-added="imageHandler"/>
+                <QuillEditor theme="snow" :options="editorSettings" v-model="blogHTML" />
+                <!--                <vue-editor :editorOptions="editorSettings" v-model="blogHTML" useCustomImageHandler-->
+                <!--                            @image-added="imageHandler"/>-->
             </div>
             <div class="blog-actions">
                 <button @click="uploadBlog">Publish Blog</button>
@@ -30,9 +31,24 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import Loading from "@/components/Loading";
-import { store } from "@/store";</script>
+<script setup>
+import Loading from "@/components/Loading.vue";
+import { store } from "@/store";
+import { QuillEditor } from '@vueup/vue-quill'
+// import ImageResize from 'quill-image-resize-module';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import { ref } from "vue";
+
+// Quill.register('modules/imageResize', ImageResize);
+
+const error = ref(null),
+    errorMsg = ref(null),
+    editorSettings = ref({
+        modules: {
+            // imageResize: {}
+        }
+    })
+</script>
 
 <style lang="scss">
 .create-post {

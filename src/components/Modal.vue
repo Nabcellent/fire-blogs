@@ -8,8 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits } from 'vue'
-
 defineProps<{ modalMessage: string }>()
 
 const emit = defineEmits(['close-modal'])

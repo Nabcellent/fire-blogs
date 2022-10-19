@@ -19,7 +19,13 @@ export const store = createStore({
             { title: 'Blog card #3', blogCoverPhoto: 'stock-3', blogDate: 'May 1 2021' },
             { title: 'Blog card #4', blogCoverPhoto: 'stock-4', blogDate: 'May 1 2021' },
         ],
+        blogHTML: 'Write your blog title here...',
+        blogTitle: '',
+        blogPhotoName: '',
+        blogPhotoFileURL: null,
+        blogPhotoPreview: null,
         editPost: null,
+
         user: null,
         profileId: null,
         profileEmail: null,
